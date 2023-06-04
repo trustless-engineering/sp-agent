@@ -1,0 +1,7 @@
+server:
+  port: 8910
+sources:
+  - name: bootstrap
+    file: /var/log/cloud-init.log
+  - name: validator
+    file: /mnt/logs/solana-validator.log
