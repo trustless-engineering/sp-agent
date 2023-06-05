@@ -1,4 +1,5 @@
 import net from 'net';
+import split2 from 'split2';
 
 
 export default class AdminRPC {
@@ -15,7 +16,7 @@ export default class AdminRPC {
       console.log('[AdminRPC] disconnected from server');
     });
 
-    this.client.on('data', (data) => {
+    this.client.pipe(split2()).on('data', (data) => {
       const response = {
         type: "admin",
         line: data.toString(),
