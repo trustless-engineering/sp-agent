@@ -7,11 +7,31 @@ export default class AdminRPC {
   private nonce: number = 0;
   private nonceMap: Map<number, string> = new Map();
   private interval: NodeJS.Timeout | null = null;
+  private onData: (data: any) => void = () => { };
   constructor({ onData }: { onData: (data: any) => void }) {
-    this.client = net.createConnection("/mnt/solana-ledger/admin.rpc", () => {
-      console.log('[AdminRPC] connected to socket');
-      this.requestContactInfo();
-    });
+    this.onData = onData;
+    this.start();
+  }
+
+  private start(refreshSeconds: number = 10) {
+
+    if (this.client) {
+      console.error('[AdminRPC] already started');
+      return;
+    }
+
+    try {
+      this.client = net.createConnection("/mnt/solana-ledger/admin.rpc", () => {
+        console.log('[AdminRPC] connected to socket');
+        this.requestContactInfo();
+      });
+    } catch (err: any) {
+      console.error('[AdminRPC] error connecting to socket, retrying in 5s...', err);
+      setTimeout(() => {
+        this.start();
+      }, 1000 * 5);
+      return;
+    }
 
     this.client.on('end', () => {
       console.log('[AdminRPC] disconnected from server');
@@ -33,21 +53,24 @@ export default class AdminRPC {
         message,
         ts: new Date().toISOString(),
       }
-      
-      onData(JSON.stringify(response));
-    });
-  }
 
-  public start(refreshSeconds: number = 10) {
+      this.onData(JSON.stringify(response));
+    });
+
     if (this.interval) {
       console.error('[AdminRPC] already started');
       return;
     }
 
     this.interval = setInterval(() => {
-      this.requestStartProgress();
-      this.requestStartTime();
+      this.requestUpdate();
     }, refreshSeconds * 1000);
+  }
+
+  private requestUpdate() {
+    this.requestContactInfo();
+    this.requestStartTime();
+    this.requestStartProgress();
   }
 
   public stop() {
