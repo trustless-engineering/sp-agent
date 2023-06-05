@@ -1,5 +1,7 @@
 server:
   port: 8910
+adminRPC:
+  socket: /mnt/solana-ledger/admin.rpc
 sources:
   - name: bootstrap
     file: /var/log/cloud-init.log
