@@ -34,7 +34,7 @@ export default class AdminRPC {
     }
 
     this.interval = setInterval(() => {
-      this.requestStartStatus();
+      this.requestStartProgress();
       this.requestStartTime();
     }, refreshSeconds * 1000);
   }
@@ -49,8 +49,8 @@ export default class AdminRPC {
     this.interval = null;
   }
 
-  public requestStartStatus() {
-    this.request('startStatus')
+  public requestStartProgress() {
+    this.request('startProgress')
   }
 
   public requestStartTime() {
