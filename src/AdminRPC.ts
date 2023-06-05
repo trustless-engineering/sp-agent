@@ -16,8 +16,13 @@ export default class AdminRPC {
     });
 
     this.client.on('data', (data) => {
-      console.log(data.toString());
-      onData(data.toString());
+      const response = {
+        type: "admin",
+        line: data.toString(),
+        ts: new Date().toISOString(),
+      }
+      console.log(response);
+      onData(JSON.stringify(response));
     });
   }
 
