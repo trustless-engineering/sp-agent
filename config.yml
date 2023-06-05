@@ -7,3 +7,5 @@ sources:
     file: /var/log/cloud-init.log
   - name: validator
     file: /mnt/logs/solana-validator.log
+    filters:
+      - "solana_metrics::metrics"

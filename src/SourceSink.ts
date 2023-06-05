@@ -50,6 +50,12 @@ export default class SourceSink {
     }
 
     this.tail.pipe(split2()).on("data", (line: string) => {
+      if (this.filters.length > 0) {
+        const matches = this.filters.filter((filter) => line.includes(filter));
+        if (matches.length !== 0) {
+          return;
+        }
+      }
       const response = {
         type: "log",
         source: this.file,
