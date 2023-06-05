@@ -3,7 +3,7 @@ import split2 from 'split2';
 
 
 export default class AdminRPC {
-  private client: net.Socket;
+  private client!: net.Socket;
   private nonce: number = 0;
   private nonceMap: Map<number, string> = new Map();
   private interval: NodeJS.Timeout | null = null;

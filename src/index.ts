@@ -28,8 +28,6 @@ server.start();
 
 // Connect to the Admin RPC socket
 const admin = new AdminRPC({ onData: server.sendMessage });
-admin.start();
-
 
 // Start all sources
 const sources = config.sources.map((source: any) => {
