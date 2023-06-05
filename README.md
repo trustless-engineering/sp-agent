@@ -6,3 +6,9 @@ sp-agent is a local daemon that checks the health of a Solana RPC node. It is de
 
 ## Installation
 sp-agent should be installed with SOL Panel only.
+
+# Socket API
+The following objec are emitted:
+
+## `log` events
+These come from `SourceSink`'s and will 

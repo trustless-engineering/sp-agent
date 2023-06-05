@@ -19,6 +19,7 @@ export default class SocketServer {
     console.log(`[SocketServer] Listening on port ${this.opts.port} for websocket connections`);
   }
   public sendMessage = (data: string) => {
+    console.log(data);
     this.wss.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
         client.send(data);

@@ -62,7 +62,6 @@ export default class SourceSink {
         line: line,
         ts: new Date().toISOString(),
       };
-      console.log(response);
       this.onData?.(JSON.stringify(response));
     });
   }

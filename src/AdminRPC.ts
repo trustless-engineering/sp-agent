@@ -30,11 +30,10 @@ export default class AdminRPC {
 
       const response = {
         type: `admin.${type}`,
-        line: data.toString(),
+        message,
         ts: new Date().toISOString(),
       }
-
-      console.log(response);
+      
       onData(JSON.stringify(response));
     });
   }
